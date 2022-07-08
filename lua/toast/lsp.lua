@@ -1,3 +1,8 @@
+require("nvim-lsp-installer").setup {}
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap=true, silent=true }
@@ -37,23 +42,39 @@ local lsp_flags = {
   debounce_text_changes = 150,
 }
 
-require('lspconfig')['pyright'].setup{
-    on_attach = on_attach,
-    flags = lsp_flags,
-}
+local function config(_config)
+    return vim.tbl_deep_extend("force", {
+        capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities),
+        on_attach = on_attach,
+        flags = lsp_flags,
+    }, _config or {})
+end
 
-require('lspconfig')['tsserver'].setup{
-    on_attach = on_attach,
-    flags = lsp_flags,
-}
+require('lspconfig')['pyright'].setup(config())
+require('lspconfig')['tsserver'].setup(config())
+require('lspconfig')['rust_analyzer'].setup(config())
+require('lspconfig').gopls.setup(config())
+require('lspconfig').html.setup(config())
+require'lspconfig'.sumneko_lua.setup(config({ 
+  settings = {
+    Lua = {
+      runtime = {
+        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+        version = 'LuaJIT',
+      },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = {'vim'},
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      -- Do not send telemetry data containing a randomized but unique identifier
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+}))
 
-require('lspconfig')['rust_analyzer'].setup{
-    on_attach = on_attach,
-    flags = lsp_flags,
-    cmd = { "rustup", "run", "nightly", "rust-analyzer" },
-}
-
-require('lspconfig').gopls.setup{
-    on_attach = on_attach,
-    flags = lsp_flags,
-}

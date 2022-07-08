@@ -12,6 +12,8 @@ opt.ignorecase = true
 opt.errorbells = false
 opt.wrap = false
 
+opt.laststatus = 3
+
 opt.relativenumber = true
 opt.signcolumn = 'yes'
 opt.number = true
