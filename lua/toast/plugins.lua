@@ -49,7 +49,13 @@ return require('packer').startup(function(use)
 
     -- git
     use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
-
+    use {
+      'lewis6991/gitsigns.nvim',
+      config = function()
+        require('gitsigns').setup()
+      end
+    }
+    use "tpope/vim-fugitive"
     --use "saadparwaiz1/cmp_luasnip" -- snippet completions
     --use { 'tzachar/cmp-tabnine', run = './install.sh', requires = 'hrsh7th/nvim-cmp' }
     --

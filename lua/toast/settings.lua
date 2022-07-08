@@ -7,7 +7,8 @@ vim.cmd("colorscheme gruvbox")
 -- General
 opt.compatible = false
 opt.colorcolumn = "80"
-opt.hlsearch = false 
+opt.signcolumn = 'yes' -- Figure out to make line number colored for W/E...
+opt.hlsearch = false
 opt.ignorecase = true
 opt.errorbells = false
 opt.wrap = false
@@ -15,7 +16,6 @@ opt.wrap = false
 opt.laststatus = 3
 
 opt.relativenumber = true
-opt.signcolumn = 'yes'
 opt.number = true
 opt.scrolloff = 8
 
