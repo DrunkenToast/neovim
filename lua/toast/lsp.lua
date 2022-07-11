@@ -55,6 +55,8 @@ require('lspconfig')['tsserver'].setup(config())
 require('lspconfig')['rust_analyzer'].setup(config())
 require('lspconfig').gopls.setup(config())
 require('lspconfig').html.setup(config())
+require('lspconfig').cssls.setup(config())
+require('lspconfig').emmet_ls.setup(config())
 require'lspconfig'.sumneko_lua.setup(config({ 
   settings = {
     Lua = {

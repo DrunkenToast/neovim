@@ -14,6 +14,9 @@ return require('packer').startup(function(use)
         options = { theme = 'gruvbox' }
     }
 
+    -- Discord
+    use 'andweeb/presence.nvim'
+
     -- cmp plugins
     use "hrsh7th/nvim-cmp" -- The completion plugin
     use "hrsh7th/cmp-nvim-lsp"
