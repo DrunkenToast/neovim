@@ -3,6 +3,14 @@ require("nvim-lsp-installer").setup {}
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
+-- update when in insert
+vim.diagnostic.config({
+    update_in_insert = true,
+    underline = true,
+    severity_sort = true,
+    virtual_lines = false,
+})
+
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap=true, silent=true }
@@ -35,6 +43,12 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
   vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
+
+  vim.keymap.set('n', '<space>tl', function()
+        require('lsp_lines').toggle()
+        vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })
+    end,
+    bufopts)
 end
 
 local lsp_flags = {
@@ -56,7 +70,18 @@ require('lspconfig')['rust_analyzer'].setup(config())
 require('lspconfig').gopls.setup(config())
 require('lspconfig').html.setup(config())
 require('lspconfig').cssls.setup(config())
-require('lspconfig').emmet_ls.setup(config())
+require('lspconfig').emmet_ls.setup(config({
+    filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less' },
+    init_options = {
+      html = {
+        options = {
+          -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+          ["bem.enabled"] = true,
+        },
+      },
+    }
+}))
+require('lspconfig').tailwindcss.setup(config())
 require'lspconfig'.sumneko_lua.setup(config({ 
   settings = {
     Lua = {

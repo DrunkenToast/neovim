@@ -1,7 +1,14 @@
 require("toast.settings")
 require("toast.keymaps")
 require("toast.plugins")
+
+require("toast.markdown")
+require("toast.telescope")
+
+require("toast.treesitter")
 require("toast.lsp")
 require("toast.cmp")
-require("toast.telescope")
+
+require("toast.lualine")
+require("toast.colorizer")
 require("toast.discord")
