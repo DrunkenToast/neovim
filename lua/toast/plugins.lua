@@ -91,6 +91,13 @@ return require('packer').startup(function(use)
     }
     use "p00f/nvim-ts-rainbow"
 
+    use {
+        'numToStr/Comment.nvim',
+        config = function()
+            require('Comment').setup()
+        end
+    }
+
     -- Autopairs
     use {
         "windwp/nvim-autopairs",
